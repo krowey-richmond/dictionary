@@ -45,8 +45,8 @@ async function findWord() {
 
 		const data = await response.json();
 		apiData = data;
-		return true;
 		audio = new Audio(data.pronunciation.audioUrl);
+		return true;
 	} catch (error) {
 		console.error("Error fetching the word:", error);
 		wordText.textContent = "Something went wrong";
@@ -65,7 +65,7 @@ function displayFind() {
 	apiData.partsOfSpeech.forEach((part) => {
 		const details = document.createElement("details");
 		details.classList.add("meaning-box");
-
+ 
 		const summary = document.createElement("summary");
 		summary.classList.add("part-of-speech");
 		summary.textContent = part.partOfSpeech;
