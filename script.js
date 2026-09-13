@@ -19,7 +19,7 @@ async function findWord() {
 
 	if (!word) {
 		alert("Please enter a word to search.");
-		return;
+		return false;
 	}
 
 	wordText.textContent = ` Looking up "${word}"...`;
@@ -30,7 +30,14 @@ async function findWord() {
 		if (!response.ok) {
 			if (response.status === 404) {
 				alert("Word not found. Please check the spelling and try again");
-				return;
+				wordText.textContent = "Word not found";
+
+				meaningSection.textContent = "";
+				antonymsSection.textContent = "";
+				synonymsSection.textContent = "";
+				wordOrigin.textContent = "";
+				wordPhonetics.textContent = " ";
+				return false;
 			}
 
 			throw new Error(`HTTP error: ${response.status}`);
@@ -38,17 +45,17 @@ async function findWord() {
 
 		const data = await response.json();
 		apiData = data;
-
+		return true;
 		audio = new Audio(data.pronunciation.audioUrl);
 	} catch (error) {
 		console.error("Error fetching the word:", error);
 		wordText.textContent = "Something went wrong";
 		alert("An error occurred while fetching the word. Please try again later.");
+		return false;
 	}
 }
 
 function displayFind() {
-	console.log(apiData.word);
 	wordText.textContent = apiData.word;
 	wordOrigin.textContent = apiData.etymology;
 	wordPhonetics.textContent = apiData.pronunciation.ipa;
@@ -138,9 +145,10 @@ audioBtn.addEventListener("click", () => {
 
 searchForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
-	await findWord();
-
-	displayFind();
+	const success = await findWord();
+	if (success) {
+		displayFind();
+	}
 });
 
 async function loadPage() {
@@ -149,8 +157,10 @@ async function loadPage() {
 
 	if (searchWord) {
 		searchInput.value = searchWord;
-		await findWord();
-		displayFind();
+		const success = await findWord();
+		if (success) {
+			displayFind();
+		}
 		return;
 	}
 
@@ -168,8 +178,10 @@ async function loadPage() {
 		starterWords[Math.floor(Math.random() * starterWords.length)];
 
 	searchInput.value = randomWord;
-	await findWord();
-	displayFind();
+	const success = await findWord();
+	if (success) {
+		displayFind();
+	}
 }
 
 loadPage();
