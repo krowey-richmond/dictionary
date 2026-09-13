@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://dictionary-krb.vercel.app//">
-    <img src="image\dictionary-krb.vercel.app.webp" width="600" style="border-radius:10px;" />
+    <img src="image\dictionary-krb.vercel.app.webp" height="300" style="border-radius:10px;" />
   </a>
 </p>
 
