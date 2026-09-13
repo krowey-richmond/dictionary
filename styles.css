@@ -479,7 +479,7 @@ input:focus-visible {
 	}
 
 	.container:has(.synonyms) {
-		grid-template-columns: 1fr;
+		
 		gap: 1.5rem;
 	}
 }
