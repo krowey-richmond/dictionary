@@ -16,29 +16,33 @@ let audio = null;
 
 async function findWord() {
 	const word = searchInput.value.trim();
+
 	if (!word) {
 		alert("Please enter a word to search.");
 		return;
 	}
 
-	console.log("Searching for word:", word);
+	wordText.textContent = ` Looking up "${word}"...`;
 
 	try {
 		const response = await fetch(`${API_URL}${word}`);
+
 		if (!response.ok) {
 			if (response.status === 404) {
 				alert("Word not found. Please check the spelling and try again");
 				return;
 			}
+
 			throw new Error(`HTTP error: ${response.status}`);
 		}
 
 		const data = await response.json();
 		apiData = data;
+
 		audio = new Audio(data.pronunciation.audioUrl);
-		console.log(data);
 	} catch (error) {
 		console.error("Error fetching the word:", error);
+		wordText.textContent = "Something went wrong";
 		alert("An error occurred while fetching the word. Please try again later.");
 	}
 }
@@ -118,13 +122,13 @@ function displayFind() {
 	});
 }
 
-historySection.textContent = "";
-const historyH2 = document.createElement("h2");
-historyH2.textContent = "history";
+// historySection.textContent = "";
+// const historyH2 = document.createElement("h2");
+// historyH2.textContent = "history";
 
-historySection.appendChild(historyH2);
-const historyDiv = document.createElement("div");
-historyDiv.classList.add("tags");
+// historySection.appendChild(historyH2);
+// const historyDiv = document.createElement("div");
+// historyDiv.classList.add("tags");
 
 audioBtn.addEventListener("click", () => {
 	if (audio) {
@@ -138,3 +142,34 @@ searchForm.addEventListener("submit", async (event) => {
 
 	displayFind();
 });
+
+async function loadPage() {
+	const params = new URLSearchParams(window.location.search);
+	const searchWord = params.get("q");
+
+	if (searchWord) {
+		searchInput.value = searchWord;
+		await findWord();
+		displayFind();
+		return;
+	}
+
+	const starterWords = [
+		"hello",
+		"beautiful",
+		"serendipity",
+		"curious",
+		"resilient",
+		"wonder",
+		"eloquent",
+	];
+
+	const randomWord =
+		starterWords[Math.floor(Math.random() * starterWords.length)];
+
+	searchInput.value = randomWord;
+	await findWord();
+	displayFind();
+}
+
+loadPage();
