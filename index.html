@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Dictionary</title>
+		<link rel="stylesheet" href="styles.css" />
+	</head>
+
+	<body>
+		<main>
+			<h1 class="masthead">DICTIONARY APP</h1>
+			<form class="search-wrapper" action="/search" method="GET">
+				<input
+					type="text"
+					name="q"
+					class="search-input"
+					placeholder="Search word.."
+					required
+					autocomplete="off"
+				/>
+				<button type="submit" class="search-button">Search</button>
+			</form>
+
+			<section class="word-box container">
+				<p class="word">hello</p>
+				<p class="phonetics">/həˈləʊ/</p>
+				<button class="audio-btn" type="button">
+					<svg
+						xmlns="http://www.w3.org/2000/svg"
+						width="24"
+						height="24"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round"
+						class="lucide lucide-volume-2"
+					>
+						<path
+							d="M11 4.702a.705.705 0 0 0-1.203-.498L6.413 7.587A1.4 1.4 0 0 1 5.416 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h2.416a1.4 1.4 0 0 1 .997.413l3.383 3.384A.705.705 0 0 0 11 19.298z"
+						/>
+						<path d="M16 9a5 5 0 0 1 0 6" />
+						<path d="M19.364 18.364a9 9 0 0 0 0-12.728" />
+					</svg>
+				</button>
+				<p class="origin">
+					early 19th century: variant of earlier hollo ; related to holla.
+				</p>
+			</section>
+			<section class="meanings container">
+				<div class="meaning-box">
+					<p class="part-of-speech">exclamation</p>
+					<ol class="definitions">
+						<li class="definition">
+							<p>A greeting used when answering the telephone.</p>
+
+							<p class="example">
+								<span>Eg.</span>
+								hello there, Katie!
+							</p>
+						</li>
+						<li class="definition">
+							<p>A greeting used when answering the telephone.</p>
+
+							<p class="example">
+								<span>Eg.</span>
+								hello there, Katie!
+							</p>
+						</li>
+						<li class="definition">
+							<p>A greeting used when answering the telephone.</p>
+
+							<p class="example">
+								<span>Eg.</span>
+								hello there, Katie!
+							</p>
+						</li>
+					</ol>
+				</div>
+				<div class="meaning-box">
+					<p class="part-of-speech">exclamation</p>
+					<ol class="definitions">
+						<li class="definition">
+							<p>A greeting used when answering the telephone.</p>
+
+							<p class="example">
+								<span>Eg.</span>
+								hello there, Katie!
+							</p>
+						</li>
+					</ol>
+				</div>
+			</section>
+			<section class="container">
+				<div class="synonyms">
+					<h2>Synonyms</h2>
+					<a href="?q=greeting">greeting</a> <a href="?q=greeting">greeting</a>
+					<a href="?q=greeting">greeting</a> <a href="?q=greeting">greeting</a>
+				</div>
+
+				<div class="antonyms">
+					<h2>Antonyms</h2>
+					<a href="?q=bye">bye</a>
+					<a href="?q=goodbye">goodbye</a>
+				</div>
+			</section>
+			<section class="container history">
+				<h2>History</h2>
+				<div class="tags">
+					<a href="?q=hello">hello</a>
+					<a href="?q=beautiful">beautiful</a>
+					<a href="?q=computer">computer</a>
+				</div>
+			</section>
+		</main>
+		<script src="script.js"></script>
+	</body>
+</html>
