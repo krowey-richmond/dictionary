@@ -27,7 +27,63 @@ async function findWord() {
 	}
 }
 
-searchForm.addEventListener("submit", (event) => {
+function displayFind() {
+	console.log(apiData.word);
+	wordText.textContent = apiData.word;
+	wordOrigin.textContent = apiData.etymology;
+	wordPhonetics.textContent = apiData.pronunciation.ipa;
+
+	meaningSection.textContent = "";
+
+	apiData.partsOfSpeech.forEach((part) => {
+		const details = document.createElement("details");
+		details.classList.add("meaning-box");
+
+		const summary = document.createElement("summary");
+		summary.classList.add("part-of-speech");
+		summary.textContent = part.partOfSpeech;
+
+		const definitions = document.createElement("ol");
+		definitions.classList.add("definitions");
+
+		part.senses.forEach((sense) => {
+			const definition = document.createElement("li");
+			definition.classList.add("definition");
+			const definitionText = document.createElement("p");
+			definitionText.textContent = sense.definition;
+			definition.append(definitionText);
+			if (sense.example) {
+				const example = document.createElement("p");
+				example.classList.add("example");
+
+				const exampleLabel = document.createElement("span");
+				exampleLabel.textContent = "Eg. ";
+
+				example.append(exampleLabel, sense.example);
+
+				definition.append(example);
+			}
+
+			definitions.appendChild(definition);
+		});
+
+		details.append(summary, definitions);
+		meaningSection.appendChild(details);
+	});
+
+antonymsSection.textContent = "";
+-
+
+
+}
+
+audioBtn.addEventListener("click", () => {
+	if (audio) {
+		audio.play();
+	}
+});
+
+searchForm.addEventListener("submit", async (event) => {
 	event.preventDefault();
 
 	findWord();
