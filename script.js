@@ -13,6 +13,7 @@ const API_URL = "https://englishdictionaryapi.com/api/v1/words/";
 
 let apiData = null;
 let audio = null;
+const history = JSON.parse(localStorage.getItem("searchHistory")) || [];
 
 async function findWord() {
 	const word = searchInput.value.trim();
@@ -46,6 +47,7 @@ async function findWord() {
 		const data = await response.json();
 		apiData = data;
 		audio = new Audio(data.pronunciation.audioUrl);
+
 		return true;
 	} catch (error) {
 		console.error("Error fetching the word:", error);
@@ -65,7 +67,7 @@ function displayFind() {
 	apiData.partsOfSpeech.forEach((part) => {
 		const details = document.createElement("details");
 		details.classList.add("meaning-box");
- 
+
 		const summary = document.createElement("summary");
 		summary.classList.add("part-of-speech");
 		summary.textContent = part.partOfSpeech;
@@ -110,7 +112,7 @@ function displayFind() {
 		const antonymTag = document.createElement("a");
 
 		antonymTag.textContent = antonym;
-		antonymTag.href = `?q=${antonym}`;
+	antonymTag.href = `?q=${encodeURIComponent(antonym)}`;
 		antonymsSection.appendChild(antonymTag);
 	});
 
@@ -124,18 +126,38 @@ function displayFind() {
 		const synonymTag = document.createElement("a");
 
 		synonymTag.textContent = synonym;
-		synonymTag.href = `?q=${synonym}`;
+synonymTag.href = `?q=${encodeURIComponent(synonym)}`;
 		synonymsSection.appendChild(synonymTag);
 	});
+	saveHistory();
+
+	historySection.textContent = "";
+	const historyH2 = document.createElement("h2");
+	historyH2.textContent = "history";
+	historySection.appendChild(historyH2);
+	const historyDiv = document.createElement("div");
+	historyDiv.classList.add("tags");
+
+	history.forEach((word) => {
+		const historyTag = document.createElement("a");
+		historyTag.textContent = word;
+		historyTag.href = `?q=${encodeURIComponent(word)}`;
+		historyDiv.appendChild(historyTag);
+	});
+	historySection.appendChild(historyDiv);
 }
 
-// historySection.textContent = "";
-// const historyH2 = document.createElement("h2");
-// historyH2.textContent = "history";
-
-// historySection.appendChild(historyH2);
-// const historyDiv = document.createElement("div");
-// historyDiv.classList.add("tags");
+function saveHistory() {
+	const index = history.indexOf(apiData.word);
+	if (index !== -1) {
+		history.splice(index, 1);
+	}
+	history.unshift(apiData.word);
+	if (history.length > 6) {
+		history.pop();
+	}
+	localStorage.setItem("searchHistory", JSON.stringify(history));
+}
 
 audioBtn.addEventListener("click", () => {
 	if (audio) {
