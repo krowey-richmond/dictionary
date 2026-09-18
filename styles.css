@@ -479,7 +479,6 @@ input:focus-visible {
 	}
 
 	.container:has(.synonyms) {
-		
 		gap: 1.5rem;
 	}
 }
